@@ -62,7 +62,7 @@
 
     <color name="divider_color_light">#0C000000</color>
 
-    <color name="buffer_highlight_color_dark">#ffab00</color>
+    <color name="buffer_highlight_color_dark">#805600</color>
     <color name="buffer_unread_color_dark">#1976d2</color>
     <color name="buffer_activity_color_dark">#00c853</color>
     <color name="buffer_read_color_dark">#dddddd</color>
@@ -84,7 +84,7 @@
     <color name="chat_line_plain_dark">@android:color/primary_text_dark</color>
     <color name="chat_line_action_dark">@android:color/secondary_text_dark</color>
     <color name="chat_line_error_dark">#d63838</color>
-    <color name="chat_line_highlight_dark">#E68D1A</color>
+    <color name="chat_line_highlight_dark">#73460D</color>
     <color name="chat_line_timestamp_dark">@android:color/tertiary_text_dark</color>
     <color name="chat_bg_action_dark">#18ffffff</color>
 
