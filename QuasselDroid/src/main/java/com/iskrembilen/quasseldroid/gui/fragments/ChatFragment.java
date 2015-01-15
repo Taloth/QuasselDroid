@@ -40,8 +40,10 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.iskrembilen.quasseldroid.Buffer;
+import com.iskrembilen.quasseldroid.BufferInfo;
 import com.iskrembilen.quasseldroid.IrcMessage;
 import com.iskrembilen.quasseldroid.IrcMessage.Type;
+import com.iskrembilen.quasseldroid.IrcUser;
 import com.iskrembilen.quasseldroid.NetworkCollection;
 import com.iskrembilen.quasseldroid.Quasseldroid;
 import com.iskrembilen.quasseldroid.R;
@@ -701,7 +703,15 @@ public class ChatFragment extends Fragment implements Serializable {
                     } else {
                         color = entry.getSenderColor();
                     }
-                    holder.msgView.setTextColor(ThemeUtil.Color.chatPlain);
+
+                    IrcUser user = buffer.getUsers().getUniqueUserByNick(entry.getNick());
+
+                    if (user == null && buffer.getInfo().type == BufferInfo.Type.ChannelBuffer) {
+                        holder.msgView.setTextColor(ThemeUtil.Color.chatParted);
+                    } else {
+                        holder.msgView.setTextColor(ThemeUtil.Color.chatPlain);
+                    }
+
                     holder.msgView.setTypeface(Typeface.DEFAULT);
 
                     if (preferences.getBoolean(getString(R.string.preference_nickbrackets), false))

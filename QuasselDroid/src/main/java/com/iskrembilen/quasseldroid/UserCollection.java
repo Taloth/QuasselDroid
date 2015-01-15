@@ -14,10 +14,12 @@ public class UserCollection extends Observable implements Observer {
     private static final String TAG = UserCollection.class.getSimpleName();
     private Map<IrcMode, ArrayList<IrcUser>> users;
     private Map<IrcMode, ArrayList<IrcUser>> uniqueUsers;
+    private Map<String, IrcUser> activeUsersCache;
 
     public UserCollection() {
         users = new HashMap<IrcMode, ArrayList<IrcUser>>();
         uniqueUsers = new HashMap<IrcMode, ArrayList<IrcUser>>();
+        activeUsersCache = new HashMap<String, IrcUser>();
         for (IrcMode mode : IrcMode.values()) {
             users.put(mode, new ArrayList<IrcUser>());
             uniqueUsers.put(mode, new ArrayList<IrcUser>());
@@ -34,6 +36,7 @@ public class UserCollection extends Observable implements Observer {
                 }
             }
         }
+        activeUsersCache.remove(user.nick);
         updateUniqueUsersSortedByMode();
         user.addObserver(this);
         update(null, null);
@@ -52,6 +55,7 @@ public class UserCollection extends Observable implements Observer {
             }
             user.first.addObserver(this);
         }
+        activeUsersCache.clear();
         updateUniqueUsersSortedByMode();
         update(null, null);
     }
@@ -75,6 +79,7 @@ public class UserCollection extends Observable implements Observer {
                 //Log.e(TAG, "User "+user.nick+" was not found with mode "+mode.modeName+".");
             }
         }
+        activeUsersCache.remove(user.nick);
         notifyObservers(R.id.BUFFERUPDATE_USERSCHANGED);
     }
 
@@ -88,6 +93,7 @@ public class UserCollection extends Observable implements Observer {
                 }
             }
         }
+        activeUsersCache.clear();
         notifyObservers(R.id.BUFFERUPDATE_USERSCHANGED);
     }
 
@@ -190,6 +196,25 @@ public class UserCollection extends Observable implements Observer {
         return uniqueUsers.get(mode);
     }
 
+    public IrcUser getUniqueUserByNick(String nick) {
+
+        if (!activeUsersCache.containsKey(nick)) {
+
+            for (IrcMode mode : IrcMode.values()) {
+                for (IrcUser user : uniqueUsers.get(mode)) {
+                    if (user.nick.equals(nick)) {
+                        activeUsersCache.put(nick, user);
+                        return user;
+                    }
+                }
+            }
+            activeUsersCache.put(nick, null);
+            return null;
+        } else {
+            return activeUsersCache.get(nick);
+        }
+    }
+
     private void updateUniqueUsersSortedByMode() {
         /*
         * Because IrcMode.values() starts at the first declaration and moves down,
@@ -241,6 +266,7 @@ public class UserCollection extends Observable implements Observer {
             Collections.sort(uniqueUsers.get(mode));
             this.setChanged();
         }
+        activeUsersCache.clear();
         notifyObservers(R.id.BUFFERUPDATE_USERSCHANGED);
     }
 }

@@ -48,6 +48,7 @@ public class ThemeUtil {
 
             Color.chatPlain = resources.getColor(R.color.chat_line_plain_light);
             Color.chatError = resources.getColor(R.color.chat_line_error_light);
+            Color.chatParted = resources.getColor(R.color.chat_line_parted_light);
             Color.chatAction = resources.getColor(R.color.chat_line_action_light);
             Color.chatTimestamp = resources.getColor(R.color.chat_line_timestamp_light);
             Color.chatHighlight = resources.getColor(R.color.chat_line_highlight_light);
@@ -83,6 +84,7 @@ public class ThemeUtil {
 
             Color.chatPlain = resources.getColor(R.color.chat_line_plain_dark);
             Color.chatError = resources.getColor(R.color.chat_line_error_dark);
+            Color.chatParted = resources.getColor(R.color.chat_line_parted_dark);
             Color.chatAction = resources.getColor(R.color.chat_line_action_dark);
             Color.chatTimestamp = resources.getColor(R.color.chat_line_timestamp_dark);
             Color.chatHighlight = resources.getColor(R.color.chat_line_highlight_dark);
@@ -120,6 +122,7 @@ public class ThemeUtil {
     public static class Color {
         public static int
                 chatPlain,
+                chatParted,
                 chatAction,
                 chatError,
                 chatHighlight,
